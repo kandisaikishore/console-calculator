@@ -2,14 +2,14 @@
 
 [![Java](https://img.shields.io/badge/Java-CLI-orange?logo=openjdk)](https://www.java.com/) [![Repository](https://img.shields.io/badge/GitHub-Source-181717?logo=github)](https://github.com/kandisaikishore/console-calculator) [![Last Commit](https://img.shields.io/github/last-commit/kandisaikishore/console-calculator)](https://github.com/kandisaikishore/console-calculator/commits/main)
 
-A small console-based calculator project for practising Java fundamentals, user input, arithmetic logic, and error handling.
+A Java command-line calculator for practising arithmetic, console input, control flow, and error handling. The main implementation is located in `console calculator/Calculator.java`.
 
-## Project goals
+## Features
 
-- Perform supported arithmetic operations from a terminal interface
-- Practise control flow, methods, and numeric input
-- Keep calculations simple to understand and extend
-- Exercise calculation behaviour with the test source included in the repository
+- Perform the arithmetic operations supported by the current calculator
+- Interact through a terminal-based interface
+- Practise Java methods, input parsing, and conditional logic
+- Find a simple smoke-test source in `CalculatorTest.java`
 
 ## Tech stack
 
@@ -18,38 +18,32 @@ A small console-based calculator project for practising Java fundamentals, user 
 
 ## Prerequisites
 
-Install a JDK and verify that `java` and `javac` work in your terminal.
+Install a JDK and verify that `java` and `javac` are available in your terminal.
 
-## Get the code
+## Run locally
 
 ```bash
 git clone https://github.com/kandisaikishore/console-calculator.git
 cd console-calculator
+javac "console calculator/Calculator.java"
 ```
 
-Inspect the Java files to identify the main class and compile command. For a project with Java files in the default package, the general pattern is:
+Run the class using its declared package/class name. If you are using an IDE, open the project folder and run the main method in `Calculator.java`. Check the source for the exact entry-point class and any input prompts.
 
-```bash
-javac *.java
-java Main
-```
+## Validation checklist
 
-Replace `Main` with the actual entry-point class. If tests require a framework or separate command, follow the configuration checked into the repository.
+Try valid integers and decimals, negative numbers, invalid text, zero, and division by zero. Re-run the available tests after changing calculation behaviour.
 
-## Testing and edge cases
+## Improvements to consider
 
-Consider verifying zero values, negative numbers, decimal input, invalid input, and division by zero. Run the available test files after changing calculation logic.
-
-## Ideas to extend
-
-- Add a clear menu and repeat-calculation loop
-- Improve input validation and error messages
-- Add calculation history or scientific operations
-- Add automated tests for normal and boundary cases
+- Improve invalid-input messages
+- Handle division by zero consistently
+- Add tests for boundary conditions
+- Support a calculation history or additional operations
 
 ## Contributing
 
-Small, well-scoped contributions are welcome. Include reproduction steps and the checks you ran.
+Open an issue with reproduction steps or send a focused pull request with verification details.
 
 ## License
 
