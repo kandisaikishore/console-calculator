@@ -7,7 +7,7 @@ on:
     branches: [main]
   workflow_dispatch:
   schedule:
-    - cron: "27 2 * * *"
+    - cron: "47 2 * * *"
 
 permissions:
   contents: read
@@ -21,22 +21,19 @@ jobs:
       matrix:
         java-version: ['17', '21']
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-      - name: Set up JDK
-        uses: actions/setup-java@v4
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
         with:
           distribution: temurin
           java-version: ${{ matrix.java-version }}
-      - name: Inspect Java source files
+      - name: Locate Java files
         run: |
           set -eu
-          count=$(find . -type f -name '*.java' -not -path './.git/*' | wc -l)
-          echo "Java source files found: $count"
-          test "$count" -gt 0
-      - name: Compile tracked Java sources
+          find . -type f -name '*.java' -not -path './.git/*' -not -path './build-classes/*' > /tmp/java-sources.txt
+          test -s /tmp/java-sources.txt
+          cat /tmp/java-sources.txt
+      - name: Compile Java source files
         run: |
           set -eu
           mkdir -p build-classes
-          find . -type f -name '*.java' -not -path './.git/*' -not -path './build-classes/*' > /tmp/java-sources.txt
           javac -encoding UTF-8 -d build-classes @/tmp/java-sources.txt
