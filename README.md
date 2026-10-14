@@ -1,49 +1,56 @@
 # Console Calculator
 
-## Live Demo / Deployment URL
+[![Java](https://img.shields.io/badge/Java-CLI-orange?logo=openjdk)](https://www.java.com/) [![Repository](https://img.shields.io/badge/GitHub-Source-181717?logo=github)](https://github.com/kandisaikishore/console-calculator) [![Last Commit](https://img.shields.io/github/last-commit/kandisaikishore/console-calculator)](https://github.com/kandisaikishore/console-calculator/commits/main)
 
-**Deployment URL:** Not verified yet. Add the confirmed public application URL here after checking the live service. This repository's GitHub URL is the source code, not a deployed application.
+A small console-based calculator project for practising Java fundamentals, user input, arithmetic logic, and error handling.
 
+## Project goals
 
-[![GitHub](https://img.shields.io/badge/GitHub-Repository-181717?logo=github)](https://github.com/saikishore2410/console-calculator) [![Issues](https://img.shields.io/github/issues/saikishore2410/console-calculator)](https://github.com/saikishore2410/console-calculator/issues) [![Last Commit](https://img.shields.io/github/last-commit/saikishore2410/console-calculator)](https://github.com/saikishore2410/console-calculator/commits/main)
+- Perform supported arithmetic operations from a terminal interface
+- Practise control flow, methods, and numeric input
+- Keep calculations simple to understand and extend
+- Exercise calculation behaviour with the test source included in the repository
 
-> A compact command-line calculator for practising programming fundamentals and arithmetic operations.
+## Tech stack
 
-## At a glance
+- Java / JDK
+- Command-line interface
 
-- **Purpose:** Use the feature and scope sections below to understand the problem this project addresses.
-- **Getting started:** Follow the repository-specific setup instructions and verify commands against the current source and package scripts.
-- **Configuration:** Keep API keys, database credentials, tokens, and private user data out of commits; configure secrets locally.
-- **Quality checks:** Run the available build, test, and lint commands before submitting changes.
+## Prerequisites
 
+Install a JDK and verify that `java` and `javac` work in your terminal.
 
-
-A compact command-line calculator for practising programming fundamentals and arithmetic operations.
-
-## Overview
-
-This project demonstrates accepting user input, performing calculations, and displaying results in a terminal-based interface. Exact operations and validation behaviour are defined by the source code.
-
-## Getting started
+## Get the code
 
 ```bash
-git clone https://github.com/saikishore2410/console-calculator.git
+git clone https://github.com/kandisaikishore/console-calculator.git
 cd console-calculator
 ```
 
-Open the project in your IDE or terminal, then follow the build and run instructions for the language used in the repository.
+Inspect the Java files to identify the main class and compile command. For a project with Java files in the default package, the general pattern is:
 
-## Ideas for improvement
+```bash
+javac *.java
+java Main
+```
 
-- Validate empty and non-numeric input
-- Handle division by zero and unsupported operations
-- Add tests for normal and boundary cases
-- Add history or scientific operations
+Replace `Main` with the actual entry-point class. If tests require a framework or separate command, follow the configuration checked into the repository.
 
-## Contributions
+## Testing and edge cases
 
-Focused fixes and improvements with clear test steps are welcome.
+Consider verifying zero values, negative numbers, decimal input, invalid input, and division by zero. Run the available test files after changing calculation logic.
+
+## Ideas to extend
+
+- Add a clear menu and repeat-calculation loop
+- Improve input validation and error messages
+- Add calculation history or scientific operations
+- Add automated tests for normal and boundary cases
+
+## Contributing
+
+Small, well-scoped contributions are welcome. Include reproduction steps and the checks you ran.
 
 ## License
 
-No license is specified. Add a `LICENSE` file to define reuse rights.
+No license file is currently declared. Add a `LICENSE` file to define reuse terms.
