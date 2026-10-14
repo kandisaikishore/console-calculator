@@ -1,26 +1,24 @@
 # Console Calculator
 
-[![Java](https://img.shields.io/badge/Java-CLI-orange?logo=openjdk)](https://www.java.com/) [![Repository](https://img.shields.io/badge/GitHub-Source-181717?logo=github)](https://github.com/kandisaikishore/console-calculator) [![Last Commit](https://img.shields.io/github/last-commit/kandisaikishore/console-calculator)](https://github.com/kandisaikishore/console-calculator/commits/main)
+[![Java](https://img.shields.io/badge/Java-CLI-orange?logo=openjdk)](https://www.java.com/) [![Source](https://img.shields.io/badge/Source-GitHub-181717?logo=github)](https://github.com/kandisaikishore/console-calculator)
 
-A Java command-line calculator for practising arithmetic, console input, control flow, and error handling. The main implementation is located in `console calculator/Calculator.java`.
+A lightweight Java command-line calculator for practising arithmetic operations, console input handling, and defensive programming. The implementation lives in the `console calculator/` directory.
 
-## Features
+## Highlights
 
-- Perform the arithmetic operations supported by the current calculator
+- Calculate using the operations supported by the current implementation
 - Interact through a terminal-based interface
-- Practise Java methods, input parsing, and conditional logic
-- Find a simple smoke-test source in `CalculatorTest.java`
+- Practise Java methods, branching, input parsing, and error handling
+- Includes a smoke-test source at `CalculatorTest.java`
 
-## Tech stack
+## Technology
 
 - Java / JDK
 - Command-line interface
 
-## Prerequisites
-
-Install a JDK and verify that `java` and `javac` are available in your terminal.
-
 ## Run locally
+
+Install a JDK, then compile and run the calculator from the repository root:
 
 ```bash
 git clone https://github.com/kandisaikishore/console-calculator.git
@@ -28,23 +26,23 @@ cd console-calculator
 javac "console calculator/Calculator.java"
 ```
 
-Run the class using its declared package/class name. If you are using an IDE, open the project folder and run the main method in `Calculator.java`. Check the source for the exact entry-point class and any input prompts.
+Run the entry-point class declared in `Calculator.java`. If the file declares a package, compile from the appropriate directory and use its fully qualified class name.
 
 ## Validation checklist
 
-Try valid integers and decimals, negative numbers, invalid text, zero, and division by zero. Re-run the available tests after changing calculation behaviour.
+Test normal arithmetic inputs, negative values, decimals if supported, invalid input, and division by zero. Re-run the available test source after changing calculation logic.
 
-## Improvements to consider
+## Potential improvements
 
-- Improve invalid-input messages
-- Handle division by zero consistently
-- Add tests for boundary conditions
-- Support a calculation history or additional operations
+- Consistent input validation and helpful error messages
+- Automated tests for arithmetic edge cases
+- A calculation history or additional operations
+- A documented build command that works across operating systems
 
 ## Contributing
 
-Open an issue with reproduction steps or send a focused pull request with verification details.
+Open issues with reproduction steps and expected behaviour. Include the checks performed with each pull request.
 
 ## License
 
-No license file is currently declared. Add a `LICENSE` file to define reuse terms.
+No license file is currently declared. Add a `LICENSE` file to define reuse and redistribution terms.
