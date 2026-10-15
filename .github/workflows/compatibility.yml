@@ -27,13 +27,16 @@ jobs:
           distribution: temurin
           java-version: ${{ matrix.java-version }}
       - name: Locate Java files
+        shell: bash
         run: |
-          set -eu
-          find . -type f -name '*.java' -not -path './.git/*' -not -path './build-classes/*' > /tmp/java-sources.txt
-          test -s /tmp/java-sources.txt
-          cat /tmp/java-sources.txt
+          set -euo pipefail
+          mapfile -d '' sources < <(find . -type f -name '*.java' -not -path './.git/*' -not -path './build-classes/*' -print0)
+          test "${#sources[@]}" -gt 0
+          printf 'Found %s Java source files\n' "${#sources[@]}"
       - name: Compile Java source files
+        shell: bash
         run: |
-          set -eu
+          set -euo pipefail
+          mapfile -d '' sources < <(find . -type f -name '*.java' -not -path './.git/*' -not -path './build-classes/*' -print0)
           mkdir -p build-classes
-          javac -encoding UTF-8 -d build-classes @/tmp/java-sources.txt
+          javac -encoding UTF-8 -d build-classes "${sources[@]}"
