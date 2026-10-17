@@ -1,8 +1,11 @@
 import { fireEvent, render, screen, within } from "@testing-library/react";
-import { describe, expect, it } from "vitest";
+import { afterEach, describe, expect, it } from "vitest";
+import { cleanup } from "@testing-library/react";
 import App from "./App";
 
-const calculator = () => screen.getAllByRole("region", { name: "Calculator" })[0];
+afterEach(() => cleanup());
+
+const calculator = () => screen.getAllByRole("region", { name: "Calculator" }).at(-1)!;
 const key = (name: string) =>
   within(calculator()).getAllByRole("button").find((button) => button.getAttribute("aria-label") === name)!;
 
@@ -46,10 +49,10 @@ describe("Calculator UI", () => {
     fireEvent.click(key("1"));
     fireEvent.click(key("2"));
     fireEvent.click(key("Backspace"));
-    expect(screen.getAllByText("1", { selector: ".screen-value" })).toHaveLength(1);
+    expect(screen.getByText("1", { selector: ".screen-value" })).toBeInTheDocument();
     fireEvent.click(key("Change sign"));
-    expect(screen.getAllByText("-1", { selector: ".screen-value" })).toHaveLength(1);
+    expect(screen.getByText("-1", { selector: ".screen-value" })).toBeInTheDocument();
     fireEvent.click(key("Percent"));
-    expect(screen.getAllByText("-0.01", { selector: ".screen-value" })).toHaveLength(1);
+    expect(screen.getByText("-0.01", { selector: ".screen-value" })).toBeInTheDocument();
   });
 });
