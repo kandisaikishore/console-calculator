@@ -2,7 +2,8 @@ import { fireEvent, render, screen, within } from "@testing-library/react";
 import { describe, expect, it } from "vitest";
 import App from "./App";
 
-const key = (name: string) => screen.getByRole("button", { name, selector: ".key" } as never);
+const key = (name: string) =>
+  screen.getByRole("button", { name, selector: ".key" } as never);
 
 describe("Calculator UI", () => {
   it("renders the keypad and performs addition", () => {
