@@ -4,7 +4,7 @@ import App from "./App";
 
 const keypad = () => screen.getByRole("region", { name: "Calculator" });
 const key = (name: string) =>
-  within(keypad()).getByRole("button", { name });
+  within(keypad()).getAllByRole("button").find((button) => button.getAttribute("aria-label") === name)!;
 
 describe("Calculator UI", () => {
   it("renders the keypad and performs addition", () => {
