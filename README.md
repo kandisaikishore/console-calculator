@@ -1,48 +1,51 @@
 # Console Calculator
 
-[![Java](https://img.shields.io/badge/Java-CLI-orange?logo=openjdk)](https://www.java.com/) [![Source](https://img.shields.io/badge/Source-GitHub-181717?logo=github)](https://github.com/kandisaikishore/console-calculator)
+[![Java](https://img.shields.io/badge/Java-CLI-orange?logo=openjdk)](https://www.java.com/) [![React](https://img.shields.io/badge/React-Frontend-149eca?logo=react)](https://react.dev/) [![Source](https://img.shields.io/badge/Source-GitHub-181717?logo=github)](https://github.com/kandisaikishore/console-calculator)
 
-A lightweight Java command-line calculator for practising arithmetic operations, console input handling, and defensive programming. The implementation lives in the `console calculator/` directory.
+A small calculator project with two independent interfaces: a Java command-line calculator and a modern React web frontend.
 
-## Highlights
+## Projects
 
-- Calculate using the operations supported by the current implementation
-- Interact through a terminal-based interface
-- Practise Java methods, branching, input parsing, and error handling
-- Includes a smoke-test source at `CalculatorTest.java`
+### Java console application
 
-## Technology
+The original implementation is in `console calculator/Calculator.java`. It provides addition, subtraction, multiplication, and division with divide-by-zero handling.
 
-- Java / JDK
-- Command-line interface
-
-## Run locally
-
-Install a JDK, then compile and run the calculator from the repository root:
+Compile from the repository root:
 
 ```bash
-git clone https://github.com/kandisaikishore/console-calculator.git
-cd console-calculator
-javac "console calculator/Calculator.java"
+javac "console calculator/Calculator.java" CalculatorTest.java
+java -cp ".:console calculator" CalculatorTest
 ```
 
-Run the entry-point class declared in `Calculator.java`. If the file declares a package, compile from the appropriate directory and use its fully qualified class name.
+On Windows Command Prompt, use a semicolon in the classpath:
 
-## Validation checklist
+```bat
+java -cp ".;console calculator" CalculatorTest
+```
 
-Test normal arithmetic inputs, negative values, decimals if supported, invalid input, and division by zero. Re-run the available test source after changing calculation logic.
+### React frontend
 
-## Potential improvements
+The React app is in `frontend/` and uses React, TypeScript, and Vite.
 
-- Consistent input validation and helpful error messages
-- Automated tests for arithmetic edge cases
-- A calculation history or additional operations
-- A documented build command that works across operating systems
+```bash
+cd frontend
+npm install
+npm run dev
+```
 
-## Contributing
+Run frontend tests and create a production build:
 
-Open issues with reproduction steps and expected behaviour. Include the checks performed with each pull request.
+```bash
+npm test
+npm run build
+```
 
-## License
+See [frontend/README.md](frontend/README.md) for requirements and features.
 
-No license file is currently declared. Add a `LICENSE` file to define reuse and redistribution terms.
+## Validation
+
+- Java smoke tests: compile the Java implementation and execute `CalculatorTest`.
+- React unit and UI tests: `cd frontend && npm test`.
+- React production build/type check: `cd frontend && npm run build`.
+
+GitHub Actions runs the existing Java workflow. The frontend workflow also builds and tests the React app on push and pull requests.
