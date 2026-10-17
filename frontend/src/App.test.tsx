@@ -44,6 +44,29 @@ describe("Calculator UI", () => {
     expect(within(dialog).getByText("42")).toBeInTheDocument();
   });
 
+  it("starts fractional operands correctly after an operator", () => {
+    render(<App />);
+    fireEvent.click(key("5"));
+    fireEvent.click(key("Add"));
+    fireEvent.click(key("Decimal point"));
+    expect(screen.getByText("0.", { selector: ".screen-value" })).toBeInTheDocument();
+    fireEvent.click(key("2"));
+    fireEvent.click(key("Calculate result"));
+    expect(screen.getByText("5.2", { selector: ".screen-value" })).toBeInTheDocument();
+  });
+
+  it("starts a decimal fraction after a completed calculation", () => {
+    render(<App />);
+    fireEvent.click(key("2"));
+    fireEvent.click(key("Add"));
+    fireEvent.click(key("3"));
+    fireEvent.click(key("Calculate result"));
+    fireEvent.click(key("Decimal point"));
+    expect(screen.getByText("0.", { selector: ".screen-value" })).toBeInTheDocument();
+    fireEvent.click(key("5"));
+    expect(screen.getByText("0.5", { selector: ".screen-value" })).toBeInTheDocument();
+  });
+
   it("supports backspace, sign and percent", () => {
     render(<App />);
     fireEvent.click(key("1"));

@@ -52,7 +52,7 @@ export default function App() {
   const inputDigit = useCallback((digit: string) => {
     setError("");
     setDisplay((current) => {
-      if (waitingForOperand) return digit;
+      if (waitingForOperand) return digit === "." ? "0." : digit;
       if (digit === "." && current.includes(".")) return current;
       if (current === "0" && digit !== ".") return digit;
       if (current === "-0" && digit !== ".") return `-${digit}`;
