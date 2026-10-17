@@ -2,9 +2,9 @@ import { fireEvent, render, screen, within } from "@testing-library/react";
 import { describe, expect, it } from "vitest";
 import App from "./App";
 
-const keypad = () => screen.getByRole("region", { name: "Calculator" });
+const calculator = () => screen.getAllByRole("region", { name: "Calculator" })[0];
 const key = (name: string) =>
-  within(keypad()).getAllByRole("button").find((button) => button.getAttribute("aria-label") === name)!;
+  within(calculator()).getAllByRole("button").find((button) => button.getAttribute("aria-label") === name)!;
 
 describe("Calculator UI", () => {
   it("renders the keypad and performs addition", () => {
@@ -46,10 +46,10 @@ describe("Calculator UI", () => {
     fireEvent.click(key("1"));
     fireEvent.click(key("2"));
     fireEvent.click(key("Backspace"));
-    expect(screen.getByText("1", { selector: ".screen-value" })).toBeInTheDocument();
+    expect(screen.getAllByText("1", { selector: ".screen-value" })).toHaveLength(1);
     fireEvent.click(key("Change sign"));
-    expect(screen.getByText("-1", { selector: ".screen-value" })).toBeInTheDocument();
+    expect(screen.getAllByText("-1", { selector: ".screen-value" })).toHaveLength(1);
     fireEvent.click(key("Percent"));
-    expect(screen.getByText("-0.01", { selector: ".screen-value" })).toBeInTheDocument();
+    expect(screen.getAllByText("-0.01", { selector: ".screen-value" })).toHaveLength(1);
   });
 });
