@@ -1,0 +1,86 @@
+name: Repository quality gates
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: quality-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  inspect:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Detect project manifests
+        id: detect
+        shell: bash
+        run: |
+          if [[ -f package.json ]]; then echo "node=true" >> "$GITHUB_OUTPUT"; else echo "node=false" >> "$GITHUB_OUTPUT"; fi
+          if [[ -f pom.xml || -f build.gradle || -f build.gradle.kts || -f gradlew ]]; then echo "java=true" >> "$GITHUB_OUTPUT"; else echo "java=false" >> "$GITHUB_OUTPUT"; fi
+          if [[ -f requirements.txt || -f pyproject.toml || -f setup.py ]]; then echo "python=true" >> "$GITHUB_OUTPUT"; else echo "python=false" >> "$GITHUB_OUTPUT"; fi
+      - name: Validate JSON package manifest
+        if: steps.detect.outputs.node == 'true'
+        run: node -e "JSON.parse(require('fs').readFileSync('package.json','utf8')); console.log('package.json is valid JSON')"
+      - name: Set up Node.js
+        if: steps.detect.outputs.node == 'true'
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Install Node dependencies
+        if: steps.detect.outputs.node == 'true'
+        shell: bash
+        run: |
+          if [[ -f bun.lock || -f bun.lockb ]]; then
+            npm install --package-lock=false
+          elif [[ -f package-lock.json ]]; then npm ci
+          elif [[ -f pnpm-lock.yaml ]]; then corepack enable && pnpm install --frozen-lockfile
+          elif [[ -f yarn.lock ]]; then corepack enable && yarn install --immutable
+          else npm install --package-lock=false
+          fi
+      - name: Run Node project quality scripts
+        if: steps.detect.outputs.node == 'true'
+        shell: bash
+        run: |
+          node -e "const p=require('./package.json'); console.log(JSON.stringify(p.scripts||{},null,2))"
+          node -e "const p=require('./package.json'); if(p.scripts?.lint) process.exit(0); console.log('No lint script declared; skipping lint step explicitly')"
+          if node -e "process.exit(require('./package.json').scripts?.lint ? 0 : 1)"; then npm run lint; fi
+          if node -e "process.exit(require('./package.json').scripts?.test ? 0 : 1)"; then npm test -- --runInBand || npm test; else echo "No test script declared; no tests were run."; fi
+          if node -e "process.exit(require('./package.json').scripts?.build ? 0 : 1)"; then npm run build; fi
+      - name: Set up Python
+        if: steps.detect.outputs.python == 'true'
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Validate Python syntax and tests when configured
+        if: steps.detect.outputs.python == 'true'
+        shell: bash
+        run: |
+          python -m compileall -q .
+          if [[ -f requirements.txt ]]; then python -m pip install -r requirements.txt; fi
+          if [[ -f pyproject.toml || -f setup.py ]]; then python -m pip install -e .; fi
+          if python -c "import pytest" 2>/dev/null; then python -m pytest -q; else echo "pytest is not installed; no pytest suite was run."; fi
+      - name: Set up Java
+        if: steps.detect.outputs.java == 'true'
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+          cache: maven
+      - name: Run Maven validation
+        if: steps.detect.outputs.java == 'true' && hashFiles('pom.xml') != ''
+        run: mvn -B -ntp test
+      - name: Run Gradle validation
+        if: steps.detect.outputs.java == 'true' && (hashFiles('build.gradle') != '' || hashFiles('build.gradle.kts') != '' || hashFiles('gradlew') != '')
+        shell: bash
+        run: |
+          if [[ -f ./gradlew ]]; then chmod +x ./gradlew && ./gradlew test --no-daemon
+          elif command -v gradle >/dev/null; then gradle test --no-daemon
+          else echo "Gradle build file found but no wrapper or system Gradle available"; exit 1; fi
