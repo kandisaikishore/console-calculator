@@ -4,9 +4,24 @@
 
 A small calculator project with two independent interfaces: a Java command-line calculator and a modern React web frontend.
 
-## Projects
+## Try the user interface
 
-### Java console application
+The React frontend is available in `frontend/`. It offers a responsive calculator with keyboard support and a history panel.
+
+```bash
+cd frontend
+npm install
+npm run dev
+```
+
+For automated checks and a production build:
+
+```bash
+npm test
+npm run build
+```
+
+## Java console application
 
 The original implementation is in `console calculator/Calculator.java`. It provides addition, subtraction, multiplication, and division with divide-by-zero handling.
 
@@ -22,25 +37,6 @@ On Windows Command Prompt, use a semicolon in the classpath:
 ```bat
 java -cp ".;console calculator" CalculatorTest
 ```
-
-### React frontend
-
-The React app is in `frontend/` and uses React, TypeScript, and Vite.
-
-```bash
-cd frontend
-npm install
-npm run dev
-```
-
-Run frontend tests and create a production build:
-
-```bash
-npm test
-npm run build
-```
-
-See [frontend/README.md](frontend/README.md) for requirements and features.
 
 ## Validation
 
